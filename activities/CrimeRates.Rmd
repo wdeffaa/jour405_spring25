@@ -42,7 +42,7 @@ crimes_with_rates <- crimedata %>% mutate(total_rate =property_crime_total/popul
 
 Write a few sentences about what you found in the data. What years had the highest crime rates? What years had the lowest crime rates? Does the pattern match your expectations?
 
-The late 90s and 80s had the highest amount of crime and since then it has declined to the lowest in 2020. this does not shock me all too much because as we have evolved as a society, crime has continued to go down as well.
+The late 90s and 80s had the highest amount of crime and since then it has declined to the lowest in 2020. this does not shock me all too much because as we have evolved as a society, crime has continued to go down as well. 
 
 
 
