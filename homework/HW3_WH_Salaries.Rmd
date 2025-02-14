@@ -30,7 +30,7 @@ ANSWER HERE
 Write code to calculate the mean and median of the salaries in the dataset using the `summarize()` function. You don't need to make a new dataframe, just display the results.
 
 ```{r}
-summarise(`salary`/564)
+mean()
 ```
 
 ### Task 5: Add in the minimum and maximum salaries
