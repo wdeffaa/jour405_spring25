@@ -5,12 +5,21 @@ title: "Car Thefts"
 Follow along with the demo to learn how to calculate standard deviation and how to create a histogram of the data using R and the Tidyverse. Get started by loading the tidyverse in a new R block.
 
 ### Task 1: Load the tidyverse
+```{r}
+library(tidyverse)
+```
 
 
 ### Task 2: Load the car thefts dataset from https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/car_thefts_jan24.csv
+```{r}
+car_thefts <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/car_thefts_jan24.csv")
+```
 
 
 ### Task 3: Calculate the standard deviation of the number of car thefts, along with the mean
+```{r}
+sd("car_thefts")
+```
 
 
 ### Task 4: Create a histogram of the number of car thefts
