@@ -18,11 +18,15 @@ car_thefts <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/h
 
 ### Task 3: Calculate the standard deviation of the number of car thefts, along with the mean
 ```{r}
-sd("car_thefts")
+car_thefts %>% summarize(standardd = sd(count))
+  car_thefts %>% summarize(mean = mean(count))
 ```
 
 
 ### Task 4: Create a histogram of the number of car thefts
+```{r}
+car_thefts %>% summarize(hist(count))
+```
 
 
 ### Task 5: Add a line to the histogram that shows the mean of the number of car thefts
