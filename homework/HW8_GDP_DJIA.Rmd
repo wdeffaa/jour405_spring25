@@ -46,7 +46,7 @@ gdp_data %>%
 
 Write a few sentences about the relationship between the DJIA and GDP. Is there a strong correlation between the two variables? What does the scatterplot show?
 
-The relationship I notice between GDP and DJIA is a positive one, whereas when DJIA goes up, the GDP goes up, however, it is noticeable that the GDP does not rise as much as the DIJA.
+The relationship I notice between GDP and DJIA is a positive one, whereas when DJIA goes up, the GDP goes up, however, it is noticeable that the GDP does not rise as much as the DJIA.
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
 
