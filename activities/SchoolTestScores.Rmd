@@ -171,7 +171,11 @@ story_stats
 ### Reflection Question 5:
 Based on these statistics, what would be your headline and lead paragraph for this story? Is there evidence to support the superintendent's claim?
 
-
+  Despite Some Scores Rising Above the Previous Average, Data Suggests that the Reading Program May Not Be the Reason For the Rise
+  
+ Contrary to the superintendents statements, the rise in reading scores throughout classrooms may not be due to the newly implemented reading program. According to new data and through testing, it seems that a wide array of these scores that lead to this increase in average scores came to fruition by pure coincidence, not through the implementation of the new reading program. 
 
 ### Reflection Question 6:
 What metrics or outcomes beyond test scores might be important to track for assessing reading performance?
+
+  Other metrics or outcomes that we can use to assess reading performance would be to seek potential data that could dive further into these reading tests that the children are taking to possibly find out what aspects of reading the students are excelling at and what aspects the students are falling behind in.
