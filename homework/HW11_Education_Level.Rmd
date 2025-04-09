@@ -107,7 +107,7 @@ weighted_by_education <- nonvoters_data |>
   # Group by education and response
   group_by(educ, Q21) |>
   # Sum the weights instead of counting
-  summarize(weighted_count = sum(), .groups = "drop_last") |>
+  summarize(weighted_count = sum(weight), .groups = "drop_last") |>
   # Calculate weighted percentages
   mutate(weighted_total = sum(weighted_count),
          weighted_percentage = weighted_count / weighted_total * 100) |>
@@ -134,11 +134,11 @@ kable(weighted_educ_summary, digits = 1, caption = "Weighted Voting Intentions b
 
 1. How did the percentages change after applying weights? Which education group showed the biggest changes?
 
-ANSWER HERE
+There seemed to be very little change in percentages through most of the table. The biggest change occured in the "High School or less" category in which the percentage slightly dropped for "Yes" and there was a slight increase in "No" and "Unsure" columns. 
 
 2. Why might the weighted results be considered more accurate than the unweighted results?
 
-ANSWER HERE
+Because weighted results even out the sample size for each different category being surveyed, not counting one vote as more than a single vote.
 
 ## Task 7: Comparison of Weighted vs. Unweighted Results
 
@@ -170,7 +170,7 @@ kable(comparison, digits = 1, caption = "Difference Between Weighted and Unweigh
 
 Which education group shows the largest differences between weighted and unweighted results?
 
-ANSWER HERE
+"High School or less" shows the largest difference in results between weighted and unweighted.
 
 ## Task 9: Visualization
 
@@ -189,7 +189,7 @@ educ_viz_data <- bind_rows(
     filter(Q21 == 1) |>  # Only "Yes" responses
     mutate(
       Type = "Weighted",
-      percentage = REPLACE_ME
+      percentage = weighted_percentage
     ) |>
     select(Type, educ, percentage)
 )
@@ -218,7 +218,7 @@ ggplot(educ_viz_data,
 
 Does the visualization make it easier to see the differences between weighted and unweighted results? Why or why not?
 
-ANSWER HERE
+I think it does do a good job visualizing the differences between the weighted and unweighted results, however, I personally feel like there is not much of a need for visualization because the only noticeable change is in the "High School and less" category.
 
 ## Task 11: Summary
 
@@ -228,12 +228,18 @@ Based on your analysis of weighted and unweighted results by education level, wr
 2. How weighting affected your understanding of this relationship
 3. What this means for interpreting polling results in news reporting
 
-YOUR ANSWER HERE
+Education level relates quite a bit to voting intentions as people who have higher levels of education than High School seem more likely to intend on voting in the upcoming election. Weighting slightly affected my understanding of the relationship between education level and voting by showing that results that are unweighted are overinflated than results are weighted and therefore weighted results seem to be more accurate. This means that when interpreting polling we should consider many factors that went into polling, including how every vote is weighted, as even the slight difference between weighted and unweighted results can be large.   
 
 ## Task 12: Final Reflection Questions
 
 1. Why is it important for journalists to understand survey weighting when reporting on polls?
 
+It is important to understand weighting when reporting on polls so you can fully understand how each vote may be weighed and to better intrepret polling as a whole.
+
 2. How might the differences between weighted and unweighted results affect how you would report on this data?
 
+I think that the differences in weighted and unweighted data would impact my reporting on this data by taking into consideration the how even the little changes between the two could have a big impact in polling nationwide.
+
 3. What additional information would you want to know about how the weights were calculated before using this data in a news story?
+
+Additional information I would want to know regarding how the weights are calculated would be were there other variables used to calculate these weights, was a certain group of people polled for this or was the variety in people polled outside of education level still high?
