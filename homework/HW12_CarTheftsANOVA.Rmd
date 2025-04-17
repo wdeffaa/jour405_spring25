@@ -193,6 +193,6 @@ This analysis has examined whether there are significant differences in car thef
 
 Yes, there is a significant difference between the three time periods, the difference between the the pre-spike and post-spike is real and significant.
 
-Headline: Monthly Car Theft Rates Show Significant Rise After Spike Year in 2023
+Headline: Car Theft Rates Show Significant Rise After Spike Year in 2023
 
-Lede: Monthly car theft rates show major spikes following a sharp rise in 2023 from 2022. Prior to the spike year in 2023, monthly car theft rates were relatively low and now show a significant difference after the spike year with 2024 still showing high monthly car theft rates. 
+Lede: Car theft rates show major spikes following a sharp rise in 2023 from 2022. Prior to the spike year in 2023, monthly car theft rates were relatively low and now show a significant difference after the spike year with 2024 still showing high monthly car theft rates. 
