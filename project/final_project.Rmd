@@ -1,0 +1,13 @@
+---
+title: "final_project"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+read_csv("Movie_Reviews.csv")
+```
+The data listed is films from the IMDb Top 250 Movies list, numbered from 1-250. The dataset contains the title of the movie, the year released, the Rotten Tomatoes rating, the adjusted Rotten Tomatoes rating and the Letterboxd rating for each movie. For the adjusted Rotten Tomatoes rating, I used the formula (RT_Rating / 100) * 5 * 100. Some numbers came back with decimal places that went to the hundredth, to fix this to make sure every number just went to the tenth, numbers that were 5 and above in the hundredth place would be rounded up to the nearest tenth decimal place, and numbers 4 and below would be rounded down to the nearest tenth decimal place. One issue I encountered with a few films was some numbers coming out as 4.95, to fix this, I determined that if the Rotten Tomatoes rating was NOT 100%, I did NOT round up and instead simply put the value at 4.9. In the right-most column, I put the Letterboxd rating for each movie by looking through the Letterboxd app and going through every movie, checking their ratings. The time period of these movies range from 1921-2024, with the oldest movie being "The Kid" (1921), and the newest movies being "Dune: Part Two," "The Wild Robot," "I'm Still Here" and "Maharaja" (2024). Something that is missing and that I may want to cover to make sure I have the most accurate data is listing the number of reviewers for these movies. When listing movies, I noticed that some movies have a much higher amount of reviews than others. I am concerned that this imbalance can skew the data and possibly make it less reliable. What is the best way for me to level out the playing field for the amount of reviews these movies have? This is a concern I have for both Rotten Tomatoes and Letterboxd reviews. One final idea I have that I would like to examine is do Rotten Tomatoes reviewers (critics) rate older movies more favorably than newer movies, and vice versa. This is a question I have regarding Letterboxd reviewers (public opinion) as well.  
