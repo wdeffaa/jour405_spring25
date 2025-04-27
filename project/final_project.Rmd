@@ -7,6 +7,12 @@ output: html_document
 library(tidyverse)
 ```
 
+Tests I would Like to Run:
+
+For my final project, the main hypothesis I would like to test is that Rotten Tomatoes ratings, given by movie critics, are often indicative of public opinion. I believe the one way to test this hypothesis is by using the ANOVA test to see if there are similar patterns in high reviews given by movie critics via Rotten Tomatoes ratings, to high reviews given by public opinion via Letterboxd ratings, or if similar patterns do not exist. Another way that I could test this would be to use the 'cor()' function to calculate the possible correlation between high reviews given by critics and high reviews given via public opinion. While I believe these are good ways to test this hypothesis, I still feel there are better ways to test, but I am unsure what other tests may sute this task better. 
+
+For my second hypothesis, I would like to look into critical and public perception of movies based on how old they are. My hypothesis is that movie critics (Rotten Tomatoes) are more favorable to older movies in terms of ratings and that public opinion (Letterboxd), are more favorable to newer movies. I would use the same tests I used for my first hypothesis for this one as well. My main concern for this hypothesis is I am not too sure how to label some movies as 'new' and some as 'old'. My first thought was to consider movies made before 1980 'old' and movies after this year to be 'new'. I would love to have your opinion on this matter as I am still unsure if this is the best line to draw between 'new' and 'old'.         
+
 ```{r}
 read_csv("Movie_Reviews.csv")
 ```
