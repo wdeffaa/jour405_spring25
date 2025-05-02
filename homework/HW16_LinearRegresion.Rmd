@@ -1,0 +1,86 @@
+---
+title: "HW16_LinearRegresion"
+output: html_document
+author: William Deffaa
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+options(scipen = 999)
+```
+
+### Introduction
+
+We'll do what we did in class, but with a twist: instead of Montgomery County, Pa., you'll be working with data from Montgomery County, Md. Same basic idea, though: linear regression looking at free and reduced-price meals and math test scores.
+
+Just as in the exercise, you will create a scatterplot to visualize the relationship between the FARMS (Free and Reduced-price Meal System) percentage and the percentage of students who met or exceeded math expectations. You'll then use linear regression to identify the schools that show the biggest differences between their actual and expected math test scores and evaluate the results of your model.
+
+### Loading the Data
+
+First, let's load the data into a data frame using the read_csv() function from the tidyverse library.
+
+```{r}
+schools <- read_csv("https://raw.githubusercontent.com/dwillis/jour405_files/refs/heads/main/montgomery_md.csv")
+```
+### Task: Create a Scatterplot and Describe the Results (5 points)
+
+First, let's create a scatterplot to visualize the relationship between the FARMS percentage and the percentage of students who met or exceeded math expectations. We'll use ggplot2 to create the plot and add a linear regression line.
+
+```{r}
+schools |>
+  ggplot(aes(x = `FARMS Pct`, y = `% Met or Exceeded Math Expectations`)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(x = "FARMS Percentage", y = "% Met or Exceeded Math Expectations", title = "Scatterplot of Math Expectations vs FARMS Percentage")
+```
+Based on what you see here, what's the relationship between FARMS percentage and math test scores? Compare this scatterplot to the one you made in the class activity.
+
+There seems to be negative relationship between the percentage of students on FARMS and the percentage of students that met or exceeded the math expectations. This scatterplot is a lot more telling of the data and is much clearer than the one we did in class. 
+
+
+### Task: Linear Regression Model (7 points)
+
+Next, you'll perform a linear regression analysis using the lm() function. We'll set the percentage of students who met or exceeded math expectations as the dependent variable, and the FARMS percentage as the independent variable. In other words, if we know the FARMS percentage for a school, how reliably can we predict its math score?
+
+```{r}
+model <- lm(`% Met or Exceeded Math Expectations` ~ `FARMS Pct`, data = schools)
+
+summary(model)
+```
+
+Provide the model's output for the three statistics mentioned in the class activity.
+
+The p-value in this output is less than 0.05, meaning that the relationship between the percentage of students on FARMS and math performance is statistically significant. The adjusted R-squared value is 0.6734, meaning that 67% of of the variability in math performance is due to FARMS percentage. For the residual standard error, the 11.04 means that on average, the model's predictions are off by about 11.04 percentage points.   
+
+Based on what you've learned so far, what does it tell us about the nature of the relationship between FARMS percentage and math scores? Is this model worth exploring further? Why or why not?
+
+This output tells us that there seems to be a relationship between the percentage of students on FARMS, and the percentage of those students meeting or exceeding those expectations. I believe this model is still worth exploring further because it is relatively accurate and the adjusted R-square value helps prove that most of the variability in math performance is due to FARMS percentage. 
+
+### Task: Identifying Schools with Biggest Residuals (3 points)
+
+Let's calculate and examine the residuals next. 
+
+```{r}
+schools$predicted <- predict(model)
+
+# Calculate the residuals
+schools <- schools |> 
+  mutate(residual = `% Met or Exceeded Math Expectations` - predicted)
+
+# Sort the data frame by the absolute value of the residuals in descending order
+schools <- schools |>
+  mutate(abs_residual = abs(residual)) |>
+  arrange(desc(abs_residual))
+
+```
+
+Look at the absolute values of the residuals; what are the largest differences between the predicted result and the actual math scores? Pick two schools with the largest residuals. Find the zip codes where they are located and using the CensusReporter.org website, describe the most interesting demographic data from each zip code.
+
+The two schools that have the largest residuals are Fox Chapel Elementary and Broad Acres Elementary, with residuals of 29.993 and 28.481 respectively. For the zip code of Fox Chapel Elementary, the most surprising thing I noticed about the area was that the median household income was $113,329, which is about 90% of the amount in the DMV area. This suprised me because Germantown is nearly an hour drive away from D.C. and usually areas just outside D.C. are the areas with a high median household income. For the zip code for Broad Acres Elementary, the most suprising thing I noticed was that more than half the population (54.8%) are foreign-born. This suprised me because compared to D.C., which is nearly adjacent to the zip code, the foreign-born population is more than double, with D.C. sitting at just a 24% foreign-born population.  
+
+## Task: Evaluate the model (5 points)
+
+Describe what conclusions you'd draw from this model's results and how it would influence a story pitch about the school board member and math scores.
+
+The conclusion I would draw from this model would be that it shows a negative relationship between percentage of students that meet or exceed math expectations and the percentage of students on FARMS. While I still believe this model shows a clear relationship between the two factors, I think that other factors should be investigated to help address some of the large differences between predicted results and actual results for math scores based on FARMS percentages. These results would change the perspective I would want to go in when discussing these results, and trying to find other possible factors that could clear up some of the large differences.
