@@ -3,60 +3,132 @@ title: "final_project"
 output: html_document
 ---
 
+Polished Project
+
+(All narratives are below the code that was written)
+
 ```{r}
 library(tidyverse)
 ```
-
-Trials, Errors, and Lessons 
-
 ```{r}
-read_csv("Movie_Reviews.csv")
+Movie_Reviews_FinalProj %>% summarize(standardd = sd(Adj_RT_Rating))
+  Movie_Reviews_FinalProj %>% summarize(mean = mean(Adj_RT_Rating))
 ```
 ```{r}
-Movie_Reviews %>%
-  ggplot(aes(x = Year_Released, y = LTBX_Rating)) +
-  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
-  labs(title = "Letterboxd Ratings By Year Released", x = "Year Released", y = "Rating")
-  
-```
+Movie_Reviews_FinalProj %>%
+  group_by(Year_Released) %>%
+  summarize(avg_rating = mean(Adj_RT_Rating, na.rm = TRUE)) %>%
+  ggplot(aes(x = Year_Released, y = avg_rating)) +
+    geom_col(fill = "red", color = "black") +
+    labs(title = "Average Rotten Tomato Rating by Year",
+         x = "Year Released", y = "Average Rating")
 
-```{r}
-Movie_Reviews %>% 
-  ggplot(aes(x = Year_Released, y = Adj_RT_Rating)) +
-  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
-  labs(title = "Rotten Tomatoes Ratings By Year Released", x = "Year Released", y = "Rating")
 ```
 
 ```{r}
-Movie_Reviews %>%
+Movie_Reviews_FinalProj %>% summarize(standardd = sd(LTBX_Rating))
+  Movie_Reviews_FinalProj %>% summarize(mean = mean(LTBX_Rating))
+```
+
+```{r}
+Movie_Reviews_FinalProj %>%
+  group_by(Year_Released) %>%
+  summarize(avg_rating = mean(LTBX_Rating, na.rm = TRUE)) %>%
+  ggplot(aes(x = Year_Released, y = avg_rating)) +
+    geom_col(fill = "lightblue", color = "black") +
+    labs(title = "Average LetterBoxed Rating by Year", x = "Year Released", y = "Average Rating")
+```
+
+First I wanted to present bar graphs of the averages of LetterBoxed and Rotten Tomatoes ratings of movies by year. My dataset contains movies from 2024 to 1934 and I tried to have every year be equally represented, trying to have 5 movies for each year. Through my created bar charts, we can see that average Rotten Tomatoes ratings drop around the 1980s mark, then starting to climb back up right before 2000, and finally after leveling off in the 2000s, they see a steady increase. With LetterBoxed ratings, the average ratings seem to fluctuate more in the earlier years prior to taking a dip after 1975 and then leveling out. Similar to Rotten Tomatoes average ratings, LetterBoxed average ratings seem to steadily increase during the 2000s. 
+
+```{r}
+Movie_Reviews_FinalProj %>% summarize(correlation = cor(Adj_RT_Rating, Year_Released, method = "pearson"))
+```
+
+```{r}
+Movie_Reviews_FinalProj %>%
   ggplot() +
-  geom_point(aes(x = Adj_RT_Rating, y = LTBX_Rating))
-  geom_smooth(aes(x = Adj_RT_Rating, y = LTBX_Rating), method = "lm")
+  geom_point(aes(x = Year_Released, y = Adj_RT_Rating)) +
+  geom_smooth(aes(x = Year_Released, y = Adj_RT_Rating), method = "lm") +
+  labs(title = "Correlation Between Rotten Tomatoes Ratings and Year Released", x = "Year Released", y = "Rotten Tomatoes Ratings")
 ```
-
-
-
-
-ChatGPT Link: https://chatgpt.com/c/6816d6a1-f638-8011-82c2-e648acfcd54c  
-
-Running the tests has proved much more difficult than I thought, to start, it doesn’t seem like the ANOVA test will actually work for trying to compare Letterboxd rating to Rotten Tomatoes ratings for movies and I am honestly stuck as to where to go to try to further test this. For trying to test if the year movies are released sway the opinion of critics or the general public, I was able to create a bar chart, but the results look the exact same for both the Letterboxd ratings and the Rotten Tomatoes ratings, in addition, the scale on the bar chart goes up to 8 even though the ratings for both only go up to 5, did I input the data wrong or I am supposed to change the range of the bar chart? I did use some ChatGPT for this assignment and tried to find out what other tests I could run to solve my initial hypothesis and it came back with a correlation test and a linear regression test that I will attempt to run later this week. Overall, despite all of these challenges that have came from testing my hypothesis, I still feel as though I am in a good spot and just need to make some tweaks in my data, code, and viewpoint as to how to tackle and test this hypothesis. 
-
-** I saw the suggestion to add movies outside the Top 250 and will change to now have 50 movies each decade since 2025. Example: 2025-2015, 2015-2005, 2005-1995, etc. Personally, I decided to ask ChatGPT for 50 movies between this timeframe and I plan to go back until 1925 to take these movies and put them into my database.
-
-
-Tests I would Like to Run:
-
-For my final project, the main hypothesis I would like to test is that Rotten Tomatoes ratings, given by movie critics, are often indicative of public opinion. I believe the one way to test this hypothesis is by using the ANOVA test to see if there are similar patterns in high reviews given by movie critics via Rotten Tomatoes ratings, to high reviews given by public opinion via Letterboxd ratings, or if similar patterns do not exist. Another way that I could test this would be to use the 'cor()' function to calculate the possible correlation between high reviews given by critics and high reviews given via public opinion. While I believe these are good ways to test this hypothesis, I still feel there are better ways to test, but I am unsure what other tests may sute this task better. 
-
-For my second hypothesis, I would like to look into critical and public perception of movies based on how old they are. My hypothesis is that movie critics (Rotten Tomatoes) are more favorable to older movies in terms of ratings and that public opinion (Letterboxd), are more favorable to newer movies. I would use the same tests I used for my first hypothesis for this one as well. My main concern for this hypothesis is I am not too sure how to label some movies as 'new' and some as 'old'. My first thought was to consider movies made before 1980 'old' and movies after this year to be 'new'. I would love to have your opinion on this matter as I am still unsure if this is the best line to draw between 'new' and 'old'.         
 
 ```{r}
-Movie_Reviews <- read_csv("Movie_Reviews.csv")
+Movie_Reviews_FinalProj %>% summarize(correlation = cor(LTBX_Rating, Year_Released, method = "pearson"))
 ```
+
 ```{r}
-Movie_Reviews <- Movie_Reviews %>%
-  mutate(RT_Rating = as.numeric(gsub("%", "", RT_Rating)), RT_Rating = RT_Rating / 1)
+Movie_Reviews_FinalProj %>%
+  ggplot() +
+  geom_point(aes(x = Year_Released, y = LTBX_Rating)) +
+  geom_smooth(aes(x = Year_Released, y = LTBX_Rating), method = "lm") + 
+  labs(title = "Correlation Between LetterBoxed Ratings and Year Released", x = "Year Released", "LetterBoxed Ratings")
+```
+
+Next, I wanted to see the correlations between the two different movie reviewers I am using and the year in which the movies are released. For this test, I calculated the correlations between both rating systems I'm using and the year movies were released and then put the data for each ratings on a plot point chart, with a line of best fit on the graphs as well. For both of these correlation tests, they both came back with a negative correlation between ratings and movies by the year they were released, with Rotten Tomatoes showing a stronger negative correlation than LetterBoxed ratings. This indicates that throughout time, movies have received less higher ratings. 
+
+
+```{r}
+cor.test(Movie_Reviews_FinalProj$Adj_RT_Rating, Movie_Reviews_FinalProj$LTBX_Rating, method = "pearson")
+```
+
+```{r}
+Movie_Reviews_FinalProj %>%
+  ggplot() +
+  geom_point(aes(x = LTBX_Rating, y = Adj_RT_Rating)) +
+  geom_smooth(aes(x = LTBX_Rating, y = Adj_RT_Rating), method = "lm") +
+  labs(title = "Correlation Between Rotten Tomatoes and LetterBoxed Ratings", x = "LetterBoxed Ratings", y = "Rotten Tomatoes Ratings")
+```
+
+For my first main test, I decided to test the correlation between Rotten Tomatoes ratings and LetterBoxed ratings. My hypothesis was that critics opinions, which are put into the data set via Rotten Tomatoes ratings, are often indicative of public opion, which is represented by LetterBoxed ratings in the data set. I used a correlation test in which I used the "cor.test" function to test the correlation between the two rating systems. When using this function, the correlation coefficient came out to 0.667, suggesting a strong positive linear relationship between the two, meaning they are aligned. Additionally, the p-value is shown to be lower than 0.05, in which we can reject the null hypothesis and say that there is a statistically significant correlation between Rotten Tomatoes and LetterBoxed ratings. In conclusion, my first hypothesis was correct, movie critics opinion is often indicative of public opinion.
+
+```{r}
+Movie_Reviews_FinalProj %>%
+  ggplot(aes(x = Adj_RT_Rating, y = LTBX_Rating)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Scatterplot of Rotten Tomatoes vs LetterBoxed Ratings", x = "Rotten Tomatoes Ratings", y = "LetterBoxed Ratings")
+```
+
+```{r}
+model <- lm(LTBX_Rating ~ Adj_RT_Rating, data = Movie_Reviews_FinalProj)
+
+summary(model)
 
 ```
 
-The data listed is films from the IMDb Top 250 Movies list, numbered from 1-250. The dataset contains the title of the movie, the year released, the Rotten Tomatoes rating, the adjusted Rotten Tomatoes rating and the Letterboxd rating for each movie. For the adjusted Rotten Tomatoes rating, I used the formula (RT_Rating / 100) * 5 * 100. Some numbers came back with decimal places that went to the hundredth, to fix this to make sure every number just went to the tenth, numbers that were 5 and above in the hundredth place would be rounded up to the nearest tenth decimal place, and numbers 4 and below would be rounded down to the nearest tenth decimal place. One issue I encountered with a few films was some numbers coming out as 4.95, to fix this, I determined that if the Rotten Tomatoes rating was NOT 100%, I did NOT round up and instead simply put the value at 4.9. In the right-most column, I put the Letterboxd rating for each movie by looking through the Letterboxd app and going through every movie, checking their ratings. The time period of these movies range from 1921-2024, with the oldest movie being "The Kid" (1921), and the newest movies being "Dune: Part Two," "The Wild Robot," "I'm Still Here" and "Maharaja" (2024). Something that is missing and that I may want to cover to make sure I have the most accurate data is listing the number of reviewers for these movies. When listing movies, I noticed that some movies have a much higher amount of reviews than others. I am concerned that this imbalance can skew the data and possibly make it less reliable. What is the best way for me to level out the playing field for the amount of reviews these movies have? This is a concern I have for both Rotten Tomatoes and Letterboxd reviews. One final idea I have that I would like to examine is do Rotten Tomatoes reviewers (critics) rate older movies more favorably than newer movies, and vice versa. This is a question I have regarding Letterboxd reviewers (public opinion) as well.  
+In addition to testing the correlation between Rotten Tomatoes and LetterBoxed ratings, I decided to test the linear regression and see how much Rotten Tomatoes scores influence LetterBoxed scores (public opinion). From my test, I was able to see a strong linear relationship between the two rating systems. According to the model, with every 1-point increase in a Rotten Tomatoes score (using the adjusted Rotten Tomatoes range), a LetterBoxed score increases nearly 0.35 points. According to the F-statistic, the model as a whole is highly significant.
+
+```{r}
+Movie_Reviews_FinalProj %>% 
+  ggplot(aes(x = Year_Released, y = Adj_RT_Rating)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Scatterplot of Year of Movies Released vs Rotten Tomatoes Ratings", x = "Year Released", y = "Rotten Tomatoes Ratings")
+```
+
+```{r}
+model <- lm(Adj_RT_Rating ~ Year_Released, data = Movie_Reviews_FinalProj)
+
+summary(model)
+```
+
+```{r}
+Movie_Reviews_FinalProj %>%
+  ggplot(aes(x = Year_Released, y = LTBX_Rating)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "lightblue") +
+  labs(title = "Scatterplot of Year of Movies Released vs Letterboxd Ratings", x = "Year Released", y = "Letterboxd Ratings") 
+```
+
+```{r}
+model <- lm(LTBX_Rating ~ Year_Released, data = Movie_Reviews_FinalProj)
+
+summary(model)
+```
+
+For my second major test, I wanted to test my hypothesis that critics (Rotten Tomatoes Ratings), are more favorable to older movies compared to newer movies. And on the other end, public opinion (Letterboxd Ratings), are more favorable to newer movies rather than old ones. I determined "older" movies to be pre 1975, as that year is one of the years marked on the earlier bar charts. To test this hypothesis, I took both Rotten Tomatoes and Letterboxd ratings and put them in a linear regression model with the Year_Released and attempted to see if either ratings have decreased or increased throughout time and if there has been a trend since 1975. For Rotten Tomatoes ratings (critics), they tend to favor older movies more, as newer movies have seen a slightly lower rating over time. However, the effect is still small and there is only a 11.4% variance, as shown by the Adjusted R-squared, suggesting other factors may contribute to this. When doing this same test with Letterboxd ratings (public opinion), while there is the same decline in ratings given by users for newer movies rather than older movies, only about 8% of the variation in these ratings are due to the year released, suggesting that public opinion on movies are not really determined by how old or new they are. In conclusion, while my hypothesis was correcy, with both of these models showing that both critics (Rotten Tomatoes) and overall public opinion (Letterboxd) seem to favor older movies due to the fact that they are higher rated than newer movies, it's more than likely that other external factors determine these ratings rather than simply people's opinions/bias toward older movies.
+
+Story Pitch:
+
+I would pitch a story about how critics and possible public opinion overall has been trending downward on newer movies. In addition, I would suggest possibly diving into how much critics (Rotten Tomatoes) truly contribute to getting people out there to see "good" movies, possibly contributing to thier success amongst the general public. My analysis and findings would be that while public and critical opinion has been trending downward on newer movies, there are many more factors that contribute to this phenomenon rather than just a bias toward older movies. Additionally, I would also talk about how critics opinions often align very closely to overall public opinion on a film, debunking the theory that critics may be pretentious and rate movies more harshly than the overall public. Unfortunately, some problems that me be of concern would be the fact that the lower ratings of movies over time wouldn’t be entirely due to bias/preference people have toward older movies, but due to many other external factors and these factors would be difficult to find. For a reporting plan I would try to first of all expand on my list of movies, as while I think this was a good list to start out with, it would need to be bigger and the movies generated would need to be more methodical. Secondly, I would try and see what other factors I would look into to further understand why ratings for newer movies are down both by critics and the general public. And finally, I would try to look at other public movie rating sites to see if the same correlation would exist just like my original test did which would help me get a futher understanding of public opinion rather than just getting it from one site.  
